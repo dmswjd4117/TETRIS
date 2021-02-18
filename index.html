@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet"/>
+    <title>Document</title>
+    <style>
+        * {
+            font-family: 'Press Start 2P', cursive;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body, html{
+            width: 100%;
+            height: 100%;
+            background-color: rgb(4, 0, 255);
+        }
+
+        .main-container{
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        /* game-board */
+        .game-board{
+            margin: 30px;
+            /* width: 100%;
+            height: 100%; */
+            border: solid 3px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        /* game-info */
+        .game-info{
+            background-color: rgb(73, 207, 40);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-detail{
+            margin-top: 50px;
+        }
+
+        .info-detail > * {
+            margin: 10px 5px;
+        }
+
+        #next{
+            margin-top: 15px;
+            border: solid 2px wheat;
+            background-color: rgb(48, 44, 44);
+        }
+
+        .play-btn{
+            background-color: rgb(224, 36, 36);
+            width: 100px;
+            height: 60px;
+        }
+        .play-btn:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+    </style>
+    <script type="module" src="./js/main.js" defer></script>
+</head>
+<body>
+    <main class="main-container">
+        <canvas id="board" class="game-board"></canvas>
+
+        <div class="game-info">
+            <div class="info-detail">
+                <h1>TETRIS</h1>
+                <p>score : <span class="game-score">0</span></p>
+                <p>level : <span class="game-level">0</span></p>
+                <canvas id="next" class="next"></canvas>
+            </div>
+            <button class="play-btn">PLAY!</button>
+        </div>
+
+    </main>
+</body>
+</html>
