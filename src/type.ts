@@ -6,12 +6,12 @@ const BLOCK_SIZE = 30;
 type TETRO_INFO = {
     x:number,
     y:number,
-    shape?:number[][],
+    shape:number[][],
     color?:string,
     ctx?:CanvasRenderingContext2D
 }
 
-type ROTATION = {
+const ROTATION = {
     LEFT : 'left',
     RIGHT : 'right'
 }

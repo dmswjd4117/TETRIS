@@ -1,9 +1,9 @@
 import { TETRO_INFO } from "./type.js";
 export class Tetrominos {
-    public x:number = 0; 
-    public y:number = 0;
+    x:number = 0; 
+    y:number = 0;
+    shape: number[][] = [];
     private color = 'black';
-    private shape: number[][] = [];
     private ctx: CanvasRenderingContext2D;
 
     constructor(ctx: CanvasRenderingContext2D) {
@@ -17,13 +17,13 @@ export class Tetrominos {
             // [1,1,1],
             // [1,1,1]
 
-            // [0,1,0],
-            // [1,1,1],
-            // [0,0,0]
+            [0,1,0],
+            [1,1,1],
+            [0,0,0]
 
-            [2, 0, 0], 
-            [2, 2, 2], 
-            [0, 0, 0]
+            // [2, 0, 0], 
+            // [2, 2, 2], 
+            // [0, 0, 0]
         ];
         this.x = 3;
         this.y = 0;
