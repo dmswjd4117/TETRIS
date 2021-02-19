@@ -1,4 +1,4 @@
-import { TETRO_INFO } from "./type.js";
+import { TETRO_INFO , COLORS, SHAPES} from "./type.js";
 export class Tetrominos {
     x:number = 0; 
     y:number = 0;
@@ -11,22 +11,10 @@ export class Tetrominos {
     }
     
     setTetromino() {
-        this.color = 'yellow';
-        this.shape = [
-            // [1,1,1],
-            // [1,1,1],
-            // [1,1,1]
-
-            [0,1,0],
-            [1,1,1],
-            [0,0,0]
-
-            // [2, 0, 0], 
-            // [2, 2, 2], 
-            // [0, 0, 0]
-        ];
+        this.color =  COLORS[ Math.floor(Math.random() * 4 )];
+        this.shape = SHAPES[ Math.floor(Math.random() * 4 )];
         this.x = 3;
-        this.y = 0;
+        this.y = 0;    
     }
 
     draw() {
