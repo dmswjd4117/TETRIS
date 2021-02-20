@@ -3,18 +3,19 @@ export class Tetrominos {
     x:number = 0; 
     y:number = 0;
     shape: number[][] = [];
-    private color = 'black';
-    private ctx: CanvasRenderingContext2D;
+    color = 'red';
+    ctx: CanvasRenderingContext2D;
 
     constructor(ctx: CanvasRenderingContext2D) {
         this.ctx = ctx;
     }
     
-    setTetromino() {
-        this.color =  COLORS[ Math.floor(Math.random() * 4 )];
-        this.shape = SHAPES[ Math.floor(Math.random() * 4 )];
-        this.x = 3;
-        this.y = 0;    
+    setTetromino(x=3, y=0) {
+        const index = Math.floor(Math.random() * 4 );
+        this.shape = SHAPES[ index];
+        this.color =  COLORS[index];
+        this.x = x;
+        this.y = y;    
     }
 
     draw() {
@@ -31,5 +32,6 @@ export class Tetrominos {
     move(pointer: TETRO_INFO) {
         this.x = pointer.x;
         this.y = pointer.y;
+        this.shape = pointer.shape;
     }
 }
