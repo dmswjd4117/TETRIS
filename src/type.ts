@@ -17,13 +17,20 @@ const ROTATION = {
     RIGHT : 'right'
 }
 
-const COLORS = [  
-    'white',
-    'orange',
-    'yellow',
-    'cadetblue',
-    'darkorchid'
-];
+
+
+enum COLORS  {
+    Magenta  =1,
+    MidnightBlue,
+    black,
+    OrangeRed, 
+    CornflowerBlue = 5,
+    MediumTurquoise,
+    MediumVioletRed,
+    LightPink,
+    Navy,
+    red
+}
 
 const SHAPES = [
     [
@@ -49,6 +56,33 @@ const SHAPES = [
     [
         [0,5,0],
         [5,5,5],
+        [0,0,0]
+    ],
+
+
+    [
+        [6,6,0],
+        [6,6,0],
+        [0,0,0]
+    ],
+    [
+        [7, 0, 0], 
+        [7, 7, 7], 
+        [0, 0, 0]
+    ],
+    [
+        [0,0,0],
+        [8,8,8],
+        [0,0,0],
+    ],
+    [
+        [9,0,0],
+        [9,9,0],
+        [0,9,0]
+    ],
+    [
+        [0,10,0],
+        [10,10,10],
         [0,0,0]
     ]
 ]

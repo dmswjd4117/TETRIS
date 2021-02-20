@@ -38,3 +38,5 @@ export const moves = {
     [MOVE_KEY.UP]: (p:Tetrominos):TETRO_INFO => rotate(p, 'right'),
     [MOVE_KEY.Q]: (p:Tetrominos):TETRO_INFO => rotate(p, 'left')
 };
+
+

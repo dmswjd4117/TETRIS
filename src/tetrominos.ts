@@ -11,18 +11,18 @@ export class Tetrominos {
     }
     
     setTetromino(x=3, y=0) {
-        const index = Math.floor(Math.random() * 4 );
-        this.shape = SHAPES[ index];
-        this.color =  COLORS[index];
+        const index = Math.floor(Math.random() * 10 );
+        this.shape = SHAPES[index];
+        this.color = COLORS[index];
         this.x = x;
         this.y = y;    
     }
 
     draw() {
-        this.ctx.fillStyle = this.color;
         this.shape.forEach((row, j) => {
             row.forEach((value, i) => {
                 if (value > 0) {
+                    this.ctx.fillStyle = COLORS[value];
                     this.ctx.fillRect(this.x + i, this.y + j, 1, 1);
                 }
             });

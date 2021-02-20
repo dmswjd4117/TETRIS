@@ -1,5 +1,5 @@
 import { Tetrominos } from "./tetrominos.js";
-import { TETRO_INFO, MOVE_KEY, COL, ROW ,BLOCK_SIZE } from "./type.js";
+import { TETRO_INFO, MOVE_KEY, COL, ROW ,BLOCK_SIZE, COLORS } from "./type.js";
 import { moves } from "./moves.js";
 
 
@@ -60,7 +60,7 @@ export class Board {
         this.grid.forEach((row, y)=>{
             row.forEach((value, x)=>{
                 if(!value) return;
-                this.ctx.fillStyle = this.tetromino.color;
+                this.ctx.fillStyle = COLORS[value];
                 this.ctx.fillRect(x, y, 1, 1);
             })
        })
@@ -112,7 +112,7 @@ export class Board {
     }
 
     clearLines(){
-        console.table(this.grid)
+  
         this.grid.forEach((row, y)=>{
             const flag = row.every((value, x)=>{
                 return value !== 0;

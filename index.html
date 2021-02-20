@@ -19,30 +19,29 @@
             height: 100%;
             display: flex;
             justify-content: center;
-            background-color: rgb(0, 0, 0);
+            background-color: rgb(255, 255, 255);
         }
 
         .main-container{
             margin-top: 40px;
             padding: 20px;
-            background-color: rgb(68, 141, 0);
+            background-color: rgb(0, 0, 0);
             max-width: 900px;
-            height: 700px;
+            height: 900px;
             display: grid;
             grid-template-columns: 1fr 1fr;
         }
 
         /* game-board */
         .game-board{
-            border: solid 1px white;
-            background-color: rgb(65, 60, 60);
+            background-color: rgb(255, 255, 255);
         }
 
         /* game-info */
         .game-info{
             padding: 10px;
-            background-color: rgba(255, 118, 6, 0.884);
-            height: 92%;
+            background-color: rgba(235, 184, 184, 0.884);
+            height: 602.13px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -70,14 +69,14 @@
             background-color: rgb(48, 44, 44);
         }
 
-        .play-btn{
+        .play-btn, .pause-btn{
             background-color: rgb(255, 255, 255);
             width: 100px;
             height: 60px;
             margin: 20px;
         }
 
-        .play-btn:hover {
+        .play-btn:hover, .pause-btn:hover {
             cursor: pointer;
             transform: scale(1.05);
         }
@@ -90,14 +89,18 @@
 
         <div class="game-info">
             <div class="info-detail">
-                <h1 class="title">TETRIS</h1>
                 <p>score : <span class="game-score">0</span></p>
                 <p>level : <span class="game-level">0</span></p>
                 <canvas id="next" class="next"></canvas>
             </div>
-            <button class="play-btn">PLAY!</button>
+            <button class="play-btn">PLAY</button>
+            <button class="pause-btn">PAUSE</button>
         </div>
 
+        <div>
+            <h1 style="color:aliceblue;">TETRIS</h1>
+            <div style="color:aliceblue; margin-top: 14px;">good good good</div>
+        </div>
     </main>
 </body>
 </html>
