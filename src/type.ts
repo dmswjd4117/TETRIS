@@ -3,6 +3,7 @@ const ROW = 20;
 const BLOCK_SIZE = 30;
 
 
+
 type TETRO_INFO = {
     x:number,
     y:number,
@@ -56,8 +57,11 @@ enum MOVE_KEY {
     RIGHT = 39,
     LEFT = 37,
     DOWN = 40,
-    UP = 38
+    UP = 38,
+    Q = 81
 }
+
+
 
 
 

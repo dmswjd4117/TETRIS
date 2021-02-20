@@ -1,42 +1,6 @@
 import { Tetrominos } from "./tetrominos.js";
-import { TETRO_INFO, COLORS, ROTATION, MOVE_KEY, COL, ROW ,BLOCK_SIZE } from "./type.js";
-
-
-
-function rotate(tetromino: Tetrominos):TETRO_INFO{
-    const pTetromino:TETRO_INFO = { ...tetromino } 
-    for(let x=0 ; x<pTetromino.shape.length; x++){
-        for(let y=0 ; y<x ; y++){
-            [pTetromino.shape[x][y], pTetromino.shape[y][x] ]
-            =
-            [pTetromino.shape[y][x], pTetromino.shape[x][y]]
-        }
-    }
-
-    // 오른쪽(시계방향)으로 회전
-    for(let i=0 ; i<pTetromino.shape.length; i++) {
-        pTetromino.shape[i].reverse();
-    }
-
-    // 왼쪽(시계반대방향)으로 회전
-    // pTetromino.shape.reverse();
-    return pTetromino;
-}
-
-
-
-const moves = {
-    [MOVE_KEY.LEFT]: (p:Tetrominos):TETRO_INFO => ({ ...p,
-         x: p.x - 1 
-    }),
-    [MOVE_KEY.RIGHT]: (p:Tetrominos):TETRO_INFO => ({ ...p,
-         x: p.x + 1 
-    }),
-    [MOVE_KEY.DOWN]: (p:Tetrominos):TETRO_INFO => ({ ...p,
-         y: p.y+1
-    }),
-    [MOVE_KEY.UP]: (p:Tetrominos):TETRO_INFO => rotate(p)
-};
+import { TETRO_INFO, MOVE_KEY, COL, ROW ,BLOCK_SIZE } from "./type.js";
+import { moves } from "./moves.js";
 
 
 export class Board {
@@ -44,7 +8,7 @@ export class Board {
     public grid: number[][] = [];
     private ctx: CanvasRenderingContext2D;
     private ctxNext: CanvasRenderingContext2D;
-    private tetromino!: Tetrominos;
+    public tetromino!: Tetrominos;
     private tetrominoNext!: Tetrominos;
 
     constructor(ctx:CanvasRenderingContext2D, 
@@ -118,6 +82,7 @@ export class Board {
     
         // 맨 밑바닥에 닿았다면? 그리드에 저장
         this.freeze();
+        this.clearLines();
 
         // 게임 오버 했다면?
         if(this.tetromino.y == 0){
@@ -135,38 +100,7 @@ export class Board {
         return true;
     }
 
-    handleKeyPress(event:any) {
 
-        
-        if(event.keyCode == 32){
-            let newTetro = moves[MOVE_KEY.DOWN](this.tetromino);;
-            console.log('스패이스바')
-            while(this.checkLocation(newTetro)){
-                this.tetromino.move(newTetro);
-                newTetro = moves[MOVE_KEY.DOWN](this.tetromino);
-            }            
-            return;
-        }
-
-        try{
-            const key:MOVE_KEY = event.keyCode;
-            const newTetro = moves[key](this.tetromino);
-            // console.log(key, newTetro)
-        
-            // 이동할 위치가 유효한지 체크하기
-            if(!this.checkLocation(newTetro)) return;
-            // 테트로미노 위치 고정
-            this.tetromino.move(newTetro);
-            // 캔버스 지우기
-            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height); 
-            // 테트로미노 그리기
-            this.tetromino.draw();
-        }catch(err){
-            console.log(event.keyCode, err)
-        }
-    }
-
-    // 블록 grid에 저장 
     freeze() {
         this.tetromino.shape.forEach((row, y) => {
             row.forEach((value, x) => {
@@ -175,6 +109,20 @@ export class Board {
                 }
             });
         });
+    }
+
+    clearLines(){
+        console.table(this.grid)
+        this.grid.forEach((row, y)=>{
+            const flag = row.every((value, x)=>{
+                return value !== 0;
+            })
+            if(flag){
+                for(let i=y; i>=1 ;i--){
+                    this.grid[i] = this.grid[i-1];
+                }
+            }
+        })
     }
 
     // 블록 위치 가능한지 체크
@@ -204,24 +152,31 @@ export class Board {
 
 
 
-        // let newTetro:TETRO_INFO;
-        // if(event.keyCode == 32){
-        //     console.log('스패이스바')
-        //     return;
-        // }
-        // try{
-        //     const key:MOVE_KEY = event.keyCode;
-        //     newTetro = moves[key](this.tetromino);
-        //     // console.log(key, newTetro)
+    // // 키 이벤트 핸들링
+    // handleKeyPress(event:any) {
+    //     if(event.keyCode == 32){
+    //         let newTetro = moves[MOVE_KEY.DOWN](this.tetromino);;
+    //         console.log('스패이스바')
+    //         while(this.checkLocation(newTetro)){
+    //             this.tetromino.move(newTetro);
+    //             newTetro = moves[MOVE_KEY.DOWN](this.tetromino);
+    //         }            
+    //         return;
+    //     }
+
+    //     try{
+    //         const key:MOVE_KEY = event.keyCode;
+    //         const newTetro = moves[key](this.tetromino);
         
-        //     // 이동할 위치가 유효한지 체크하기
-        //     if(!this.checkLocation(newTetro)) return;
-        //     // 테트로미노 위치 고정
-        //     this.tetromino.move(newTetro);
-        //     // 캔버스 지우기
-        //     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height); 
-        //     // 테트로미노 그리기
-        //     this.tetromino.draw();
-        // }catch(err){
-        //     console.log(event.keyCode, err)
-        // }
+    //         // 이동할 위치가 유효한지 체크하기
+    //         if(!this.checkLocation(newTetro)) return;
+    //         // 테트로미노 위치 고정
+    //         this.tetromino.move(newTetro);
+    //         // 캔버스 지우기
+    //         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height); 
+    //         // 테트로미노 그리기
+    //         this.tetromino.draw();
+    //     }catch(err){
+    //         console.log(event.keyCode, err)
+    //     }
+    // }
