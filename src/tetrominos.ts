@@ -1,4 +1,7 @@
+
 import { TETRO_INFO , COLORS, SHAPES} from "./type.js";
+
+const INDEX_NUMBER = 5;
 export class Tetrominos {
     x:number = 0; 
     y:number = 0;
@@ -11,7 +14,7 @@ export class Tetrominos {
     }
     
     setTetromino(x=3, y=0) {
-        const index = Math.floor(Math.random() * 10 );
+        const index = Math.ceil(Math.random() * INDEX_NUMBER );
         this.shape = SHAPES[index];
         this.color = COLORS[index];
         this.x = x;

@@ -2,8 +2,6 @@ const COL = 10;
 const ROW = 20;
 const BLOCK_SIZE = 30;
 
-
-
 type TETRO_INFO = {
     x:number,
     y:number,
@@ -17,31 +15,24 @@ const ROTATION = {
     RIGHT : 'right'
 }
 
-
-
 enum COLORS  {
-    Magenta  =1,
-    MidnightBlue,
-    black,
-    OrangeRed, 
-    CornflowerBlue = 5,
-    MediumTurquoise,
-    MediumVioletRed,
-    LightPink,
-    Navy,
-    red
+    Magenta = 1,
+    MidnightBlue,  
+    CornflowerBlue, 
+    OrangeRed,  
+    MediumTurquoise  
 }
 
 const SHAPES = [
+    [],
     [
-        [1,1,0],
-        [1,1,0],
-        [0,0,0]
+        [1 ,1, 0],
+        [1, 1, 0],
     ],
     [
+        [0, 0, 0],
         [2, 0, 0], 
         [2, 2, 2], 
-        [0, 0, 0]
     ],
     [
         [0,0,0],
@@ -49,42 +40,16 @@ const SHAPES = [
         [0,0,0],
     ],
     [
-        [4,0,0],
-        [4,4,0],
-        [0,4,0]
+        [0,4,0,0],
+        [0,4,4,0],
+        [0,0,4,0],
+        [0,0,0,0],
     ],
     [
         [0,5,0],
         [5,5,5],
         [0,0,0]
     ],
-
-
-    [
-        [6,6,0],
-        [6,6,0],
-        [0,0,0]
-    ],
-    [
-        [7, 0, 0], 
-        [7, 7, 7], 
-        [0, 0, 0]
-    ],
-    [
-        [0,0,0],
-        [8,8,8],
-        [0,0,0],
-    ],
-    [
-        [9,0,0],
-        [9,9,0],
-        [0,9,0]
-    ],
-    [
-        [0,10,0],
-        [10,10,10],
-        [0,0,0]
-    ]
 ]
   
 enum MOVE_KEY {
@@ -95,16 +60,42 @@ enum MOVE_KEY {
     Q = 81
 }
 
+const LEVEL = {
+    0: 1000,
+    1: 820,
+    2: 730,
+    3: 650,
+    4: 370,
+    5: 280,
+    6: 200,
+    7: 190,
+    8: 130,
+    9: 90,
+    10: 70,
+};
 
+const POINTS = {
+    SINGLE: 100,
+    DOUBLE: 300,
+    TRIPLE: 500,
+};
 
-
+type User = {
+    score:number,
+    lines:number,
+    level:number
+}
 
 export { 
     TETRO_INFO , 
-    ROTATION, MOVE_KEY , 
+    ROTATION, 
+    MOVE_KEY , 
     COL, 
     ROW ,
     BLOCK_SIZE,
     SHAPES,
-    COLORS
+    COLORS,
+    LEVEL,
+    POINTS,
+    User
 }

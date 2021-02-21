@@ -1,14 +1,21 @@
-import { Tetrominos } from "./tetrominos.js";
+import { Tetrominos } from "./Tetrominos.js";
 import { TETRO_INFO, MOVE_KEY, COL, ROW ,BLOCK_SIZE, COLORS } from "./type.js";
 import { moves } from "./moves.js";
+import { userProxy } from "./user.js";
+export interface IBoard {
+    tetromino: Tetrominos;
+    grid: number[][];
+    init():void;
+    draw():void;
+    drop():boolean;
+    checkLocation(info:TETRO_INFO):boolean;
+}
 
-
-export class Board {
-    public hi:string = "BOARD !"
+export class Board implements IBoard{
+    public tetromino!: Tetrominos;
     public grid: number[][] = [];
     private ctx: CanvasRenderingContext2D;
     private ctxNext: CanvasRenderingContext2D;
-    public tetromino!: Tetrominos;
     private tetrominoNext!: Tetrominos;
 
     constructor(ctx:CanvasRenderingContext2D, 
@@ -30,6 +37,8 @@ export class Board {
         this.init();
     }
 
+
+    // 초기화
     init() {
         // 그리드 생성
         this.grid = this.getEmptyBoard();
@@ -43,16 +52,26 @@ export class Board {
         this.getNewTetromino();
     }
 
-    // next테트로미노를 생성하고 그린다.
     getNewTetromino(){
         this.tetrominoNext = new Tetrominos(this.ctxNext);
         this.ctxNext.clearRect(0, 0, this.ctxNext.canvas.width, this.ctxNext.canvas.height);
         this.tetrominoNext.setTetromino(1, 1);
-        this.tetrominoNext.draw();
     }
 
+
+    getEmptyBoard():number[][] {
+        let grid = new Array(ROW).fill(0);
+        grid = grid.map(() => Array(COL).fill(0))
+        return grid;
+    }
+
+    // 그리기 
     draw() {
+        // 내려오는 테트로미노 그리기
         this.tetromino.draw();
+        // next 테트로미노 그리기
+        this.tetrominoNext.draw();
+        // 밑에 가만히 있는 테트로미노 그리기
         this.drawBoard();
     }
 
@@ -66,20 +85,14 @@ export class Board {
        })
     }
 
-    getEmptyBoard():number[][] {
-        let grid = new Array(ROW).fill(0);
-        grid = grid.map(() => Array(COL).fill(0))
-        return grid;
-    }
-
     // 밑으로 한칸 내리거나, 고정시키거나
-    drop() {
+    drop():boolean {
         const pTetromino = moves[MOVE_KEY.DOWN](this.tetromino);
         if(this.checkLocation(pTetromino)){
             this.tetromino.move(pTetromino);
             return true;
         }
-    
+        
         // 맨 밑바닥에 닿았다면? 그리드에 저장
         this.freeze();
         this.clearLines();
@@ -112,14 +125,20 @@ export class Board {
     }
 
     clearLines(){
-  
+        let lines = 0;
         this.grid.forEach((row, y)=>{
             const flag = row.every((value, x)=>{
                 return value !== 0;
             })
             if(flag){
+                lines += 1;
                 for(let i=y; i>=1 ;i--){
                     this.grid[i] = this.grid[i-1];
+                }
+                userProxy.score += 1
+                userProxy.lines += 1
+                if(userProxy.level >= 10){
+                    userProxy.level += 1
                 }
             }
         })
@@ -151,32 +170,3 @@ export class Board {
 
 
 
-
-    // // 키 이벤트 핸들링
-    // handleKeyPress(event:any) {
-    //     if(event.keyCode == 32){
-    //         let newTetro = moves[MOVE_KEY.DOWN](this.tetromino);;
-    //         console.log('스패이스바')
-    //         while(this.checkLocation(newTetro)){
-    //             this.tetromino.move(newTetro);
-    //             newTetro = moves[MOVE_KEY.DOWN](this.tetromino);
-    //         }            
-    //         return;
-    //     }
-
-    //     try{
-    //         const key:MOVE_KEY = event.keyCode;
-    //         const newTetro = moves[key](this.tetromino);
-        
-    //         // 이동할 위치가 유효한지 체크하기
-    //         if(!this.checkLocation(newTetro)) return;
-    //         // 테트로미노 위치 고정
-    //         this.tetromino.move(newTetro);
-    //         // 캔버스 지우기
-    //         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height); 
-    //         // 테트로미노 그리기
-    //         this.tetromino.draw();
-    //     }catch(err){
-    //         console.log(event.keyCode, err)
-    //     }
-    // }

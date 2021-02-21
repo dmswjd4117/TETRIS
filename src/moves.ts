@@ -1,8 +1,12 @@
-import { Tetrominos } from "./tetrominos.js";
+import { Tetrominos } from "./Tetrominos.js";
 import { TETRO_INFO,  MOVE_KEY } from "./type.js";
 
 function rotate(tetromino: Tetrominos, dir: string):TETRO_INFO{
-    const pTetromino:TETRO_INFO = { ...tetromino } 
+    // 스프레드연산자는 객체안 객체까지 깊은복사해주지 안늠
+    //const pTetromino:TETRO_INFO = { ...tetromino }
+    
+    // 깊은 복사하는법 JSON.parse(JSON.stringify(obj)) 
+    const pTetromino:TETRO_INFO = JSON.parse(JSON.stringify(tetromino));
     for(let x=0 ; x<pTetromino.shape.length; x++){
         for(let y=0 ; y<x ; y++){
             [pTetromino.shape[x][y], pTetromino.shape[y][x] ]
@@ -22,6 +26,10 @@ function rotate(tetromino: Tetrominos, dir: string):TETRO_INFO{
         pTetromino.shape.reverse();
     }
 
+    console.log("인자")
+    console.table(tetromino.shape)
+    console.log("복사된 객체")
+    console.table(pTetromino.shape)
     return pTetromino;
 }
 
