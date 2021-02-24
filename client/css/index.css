@@ -1,0 +1,87 @@
+* {
+    font-family: 'Press Start 2P', cursive;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body, html{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(151, 148, 148);
+}
+
+.main-container{
+    padding: 20px;
+    background-color: rgb(255, 187, 187);
+    max-width: 800px;
+    height: 780px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* game-board */
+.game-board{
+    background-color: rgb(255, 255, 255);
+}
+
+/* game-info */
+.game-info{
+    color: rgb(116, 111, 111);
+    background-color: rgba(245, 225, 225, 0.884);
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-between;
+}
+
+.info-detail{
+    margin: 20px 0;
+    height: 390px;
+}
+
+.title{
+    margin: 10px 0;
+    height: 50px;
+}
+
+.info-detail > p {
+    height: 30px;
+    margin: 10px 5px;
+}
+
+#next{
+    margin-top: 15px;
+    border: solid 1px rgb(255, 255, 255);
+    background-color: rgb(216, 207, 207);
+}
+
+.play-btn, .pause-btn{
+    color: rgb(128, 128, 131);
+    background-color: rgba(252, 246, 246, 0.884);
+    width: 100px;
+    height: 60px;
+    margin: 20px;
+}
+
+.play-btn:hover, .pause-btn:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.score-board__btn{
+    color:rgb(154, 156, 156);
+    padding: 10px;
+    background-color: rgba(245, 225, 225, 0.884);
+    margin-top: 15px;
+    color: rgb(130, 128, 138);
+    display: inline-block;
+}
+
+.score-board__btn:hover{ 
+    cursor: pointer;
+    transform: scale(1.03);
+}

@@ -16,11 +16,11 @@ const ROTATION = {
 }
 
 enum COLORS  {
-    Magenta = 1,
-    MidnightBlue,  
-    CornflowerBlue, 
-    OrangeRed,  
-    MediumTurquoise  
+    Thistle = 1,
+    LightBlue,  
+    LightCoral, 
+    SteelBlue,  
+    SlateGray  
 }
 
 const SHAPES = [
@@ -60,24 +60,19 @@ enum MOVE_KEY {
     Q = 81
 }
 
-const LEVEL = {
-    0: 1000,
-    1: 820,
-    2: 730,
-    3: 650,
-    4: 370,
-    5: 280,
-    6: 200,
-    7: 190,
-    8: 130,
-    9: 90,
-    10: 70,
-};
+const LEVEL = [
+    700, 600, 560, 500,
+    490, 440, 400, 350, 300,
+    250, 200, 120, 100, 90, 80
+]
+
+const LEVEL_PER_LINES = 3
 
 const POINTS = {
     SINGLE: 100,
     DOUBLE: 300,
     TRIPLE: 500,
+    TETRIS: 1000
 };
 
 type User = {
@@ -97,5 +92,6 @@ export {
     COLORS,
     LEVEL,
     POINTS,
-    User
+    User,
+    LEVEL_PER_LINES
 }

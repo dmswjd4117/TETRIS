@@ -1,7 +1,7 @@
 import { Tetrominos } from "./Tetrominos.js";
-import { TETRO_INFO, MOVE_KEY, COL, ROW ,BLOCK_SIZE, COLORS } from "./type.js";
+import { TETRO_INFO, MOVE_KEY, LEVEL_PER_LINES, COL, ROW ,BLOCK_SIZE, COLORS, POINTS, LEVEL } from "./type.js";
 import { moves } from "./moves.js";
-import { userProxy } from "./user.js";
+import { userProxy ,time } from "./user.js";
 export interface IBoard {
     tetromino: Tetrominos;
     grid: number[][];
@@ -132,16 +132,22 @@ export class Board implements IBoard{
             })
             if(flag){
                 lines += 1;
-                for(let i=y; i>=1 ;i--){
-                    this.grid[i] = this.grid[i-1];
-                }
-                userProxy.score += 1
-                userProxy.lines += 1
-                if(userProxy.level >= 10){
-                    userProxy.level += 1
-                }
+                this.grid.splice(y, 1);
+                this.grid.unshift(Array(COL).fill(0));
             }
         })
+
+        if(lines){
+            userProxy.score += calculateScore(lines);
+            userProxy.lines += 1
+            if(userProxy.lines >= LEVEL_PER_LINES){
+                userProxy.level += 1
+                if(time.level < LEVEL.length-1){
+                    time.level += 1; 
+                } 
+                userProxy.lines -= LEVEL_PER_LINES
+            }
+        }
     }
 
     // 블록 위치 가능한지 체크
@@ -169,4 +175,22 @@ export class Board implements IBoard{
 }
 
 
+function calculateScore(lines:number) {
+    let point:number = 1;
+    switch(lines){
+        case 1:
+            point =  POINTS.SINGLE
+            break
+        case 2:
+            point =  POINTS.DOUBLE
+            break
+        case 3:
+            point =  POINTS.TRIPLE
+            break
+        case 4:
+            point =  POINTS.TETRIS
+            break         
+    }
 
+    return ( userProxy.level + 1) * point
+}

@@ -1,7 +1,7 @@
 import { Board , IBoard} from "./Board.js";
-import { MOVE_KEY , User} from "./type.js";
+import { MOVE_KEY, LEVEL } from "./type.js";
 import { moves } from "./moves.js";
-import { userProxy } from "./user.js";
+import { userProxy, time } from "./user.js";
 
 const playBtn = document.querySelector('.play-btn')!;
 const pauseBtn = document.querySelector('.pause-btn')!;
@@ -15,7 +15,6 @@ const ctxNext = canvasNext.getContext('2d')!;
   
 let requestId = 0;
 const board:IBoard = new Board(ctx, ctxNext);
-const time = { start: 0, elapsed: 0, level: 1000 };
 
 
 // 키 이벤트 핸들링
@@ -55,7 +54,8 @@ document.addEventListener('keydown', (event)=>{
 
 function animate(now = 0) {
     time.elapsed = now - time.start;
-    if(time.elapsed > time.level) {
+    if(time.elapsed > LEVEL[time.level]) {
+        console.log(LEVEL[time.level])
         time.start = now;
         if(!board.drop()){
             cancelAnimationFrame(requestId);
@@ -76,9 +76,12 @@ function animate(now = 0) {
 
 
 function resetGame() {
-    userProxy.level = 0;
     userProxy.score = 0;
+    userProxy.level = 0;
     userProxy.lines = 0;
+    time.start = 0;
+    time.elapsed = 0;
+    time.start = 0
     board.init();
 }
 
@@ -94,12 +97,33 @@ function play() {
 function gameOver(){
     alert("game over")
     console.table(board.grid)
+    askName(userProxy.score);
     pauseBtn.setAttribute('style', 'display : none');
     playBtn.setAttribute('style', 'display : ""');
+}
+
+function askName(score:number) {
+    let name = prompt("이름을 입력하세요");
+    if(!name){
+        name = 'user'
+    }
+    const data = {
+        name , score
+    } 
+    
+    fetch('/score/board/record' , {
+        method: 'POST', 
+        headers: {
+           'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(result=>{
+        console.log(result)
+    })
 }
 
 
 playBtn.addEventListener('click', play);
 
 
-export { userProxy }
+  
