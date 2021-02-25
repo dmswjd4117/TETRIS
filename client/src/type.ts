@@ -2,6 +2,15 @@ const COL = 10;
 const ROW = 20;
 const BLOCK_SIZE = 30;
 
+enum Current {
+    // 중단중 
+    'paused',
+    // 게임 진행중 
+    'playing',
+    // 처음상태
+    'first'
+}
+
 type TETRO_INFO = {
     x:number,
     y:number,
@@ -93,5 +102,6 @@ export {
     LEVEL,
     POINTS,
     User,
-    LEVEL_PER_LINES
+    LEVEL_PER_LINES,
+    Current
 }

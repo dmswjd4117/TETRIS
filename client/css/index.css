@@ -9,15 +9,16 @@ body, html{
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
-    background-color: rgb(151, 148, 148);
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(160, 176, 231);
 }
 
 .main-container{
+    margin-top: 10px;
     padding: 20px;
     background-color: rgb(255, 187, 187);
-    max-width: 800px;
-    height: 780px;
+    height: 680px;
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -61,10 +62,17 @@ body, html{
 
 .play-btn, .pause-btn{
     color: rgb(128, 128, 131);
-    background-color: rgba(252, 246, 246, 0.884);
     width: 100px;
     height: 60px;
     margin: 20px;
+}
+
+.play-btn{
+    background-color: rgba(146, 180, 253, 0.884);
+}
+
+.pause-btn{
+    background-color: rgba(255, 166, 166, 0.884);
 }
 
 .play-btn:hover, .pause-btn:hover {

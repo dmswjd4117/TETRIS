@@ -1,11 +1,10 @@
 import { Board , IBoard} from "./Board.js";
-import { MOVE_KEY, LEVEL } from "./type.js";
+import { MOVE_KEY, LEVEL, Current } from "./type.js";
 import { moves } from "./moves.js";
 import { userProxy, time } from "./user.js";
 
 const playBtn = document.querySelector('.play-btn')!;
 const pauseBtn = document.querySelector('.pause-btn')!;
-pauseBtn.setAttribute('style', 'display : none');
 
 const canvas = document.getElementById('board') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d')!;
@@ -13,15 +12,15 @@ const canvasNext = document.getElementById('next') as HTMLCanvasElement;
 const ctxNext = canvasNext.getContext('2d')!;
 
   
-let requestId = 0;
+let requestId:number|null;
 const board:IBoard = new Board(ctx, ctxNext);
+let CURRENT_PLAYING:Current = Current["first"];
 
 
 // 키 이벤트 핸들링
 function handleKeyPress(event:any) {
     if(event.keyCode == 32){
         let newTetro = moves[MOVE_KEY.DOWN](board.tetromino);;
-        console.log('스패이스바')
         while(board.checkLocation(newTetro)){
             board.tetromino.move(newTetro);
             newTetro = moves[MOVE_KEY.DOWN](board.tetromino);
@@ -55,9 +54,9 @@ document.addEventListener('keydown', (event)=>{
 function animate(now = 0) {
     time.elapsed = now - time.start;
     if(time.elapsed > LEVEL[time.level]) {
-        console.log(LEVEL[time.level])
         time.start = now;
         if(!board.drop()){
+            if(!requestId)return;
             cancelAnimationFrame(requestId);
             gameOver();
             return;
@@ -85,19 +84,38 @@ function resetGame() {
     board.init();
 }
 
+
 // 시작
 function play() {
-    resetGame();
+    if(CURRENT_PLAYING ==  Current["first"]){
+        resetGame();
+    }
+
+    CURRENT_PLAYING = Current.playing;
     animate();
+
     pauseBtn.setAttribute('style', 'display : ""');
     playBtn.setAttribute('style', 'display : none');
 } 
 
+// 게임중단
+function pause() {
+    if(!requestId) return;
+
+    CURRENT_PLAYING = Current.paused;
+    cancelAnimationFrame(requestId);
+
+    pauseBtn.setAttribute('style', 'display : none');
+    playBtn.setAttribute('style', 'display : ""');
+}
+
 // 게임 오버
 function gameOver(){
-    alert("game over")
-    console.table(board.grid)
+    console.table(board.grid);
     askName(userProxy.score);
+
+    CURRENT_PLAYING = Current.first;
+    
     pauseBtn.setAttribute('style', 'display : none');
     playBtn.setAttribute('style', 'display : ""');
 }
@@ -125,5 +143,6 @@ function askName(score:number) {
 
 playBtn.addEventListener('click', play);
 
-
+pauseBtn.setAttribute('style', 'display : none');
+pauseBtn.addEventListener('click', pause);
   
