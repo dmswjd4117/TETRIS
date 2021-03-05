@@ -26,8 +26,8 @@ const MONGO_URL = process.env.MONGO_URL
 const app = express();
 
 app.set('view engine', 'pug')
-app.set('views', path.join(__dirname, '/client')); 
-app.use(express.static(__dirname + '/client'));
+app.set('views', path.join(__dirname, '../client')); 
+app.use(express.static(path.join(__dirname, '../client')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(helmet());
@@ -35,7 +35,7 @@ app.use(morgan("dev"));
 
 
 app.get('/',function(req,res){
-    res.sendFile('/client/index.html')
+    res.sendFile( path.join(__dirname, '../client/index.html'))
 });
 
 app.get('/score/board',function(req,res){
@@ -50,7 +50,6 @@ app.get('/score/board/list',function async(req,res){
             if(err) throw err;
             const collect = client.db("mydb").collection('users')
             const option = { 
-                "limit": 8,
                 "sort":  [['score','desc'], ['name','asc']]
             };
             collect.find({}, option).toArray((err,value)=>{
