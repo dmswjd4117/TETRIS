@@ -7,11 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm-run-all build server",
     "build": "npm-run-all clean transplie",
-    "clean" :"rimraf dist-server",
+    "clean": "rimraf dist-server",
     "transplie": "babel server/index.js --out-dir dist-server",
     "server": "nodemon dist-server/index.js",
-
-    "dev" : "nodemon server/index.js --exec babel-node"
+    "dev": "nodemon server/index.js --exec babel-node"
   },
   "author": "",
   "license": "ISC",
